@@ -1,42 +1,301 @@
-#root {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+/* --- Sisense Brand Fonts & Global Reset --- */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=DM+Sans:wght@400;500;700&display=swap');
+
+html, body, #root, .App {
+  margin: 0; padding: 0; width: 100%; height: 100%;
+  box-sizing: border-box; display: flex; flex-direction: column;
+}
+*, *::before, *::after { box-sizing: inherit; }
+
+/* --- Sisense Dark Theme Base --- */
+body {
+  font-family: 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue', sans-serif;
+  background-color: #131F29; /* Sisense Primary Dark */
+  color: #FFFFFF;           /* Sisense Primary White */
+  font-size: 14px; line-height: 1.5; overflow: hidden;
+  -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale;
+}
+body.is-table-dragging, body.is-table-dragging * {
+  user-select: none; -webkit-user-select: none; -moz-user-select: none;
+  -ms-user-select: none; cursor: grabbing !important;
 }
 
-.logo {
-  height: 6em;
-  padding: 1.5em;
-  will-change: filter;
-  transition: filter 300ms;
+/* --- App Header Styling (Sisense Theme) --- */
+.app-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.75rem 1.5rem; background-color: #1A2B3C;
+  border-bottom: 1px solid #304560; flex-shrink: 0; height: 60px;
 }
-.logo:hover {
-  filter: drop-shadow(0 0 2em #646cffaa);
+.app-header h1 {
+  margin: 0; font-family: 'Poppins', sans-serif; font-size: 1.25rem;
+  font-weight: 600; color: #FFFFFF;
 }
-.logo.react:hover {
-  filter: drop-shadow(0 0 2em #61dafbaa);
+.header-actions { display: flex; gap: 0.75rem; }
+
+/* --- Button Styling (Sisense Accent) --- */
+.add-widget-main-button, .edit-layout-toggle-button {
+  padding: 0.5rem 1rem; font-family: 'Poppins', sans-serif; font-size: 0.875rem;
+  font-weight: 600; border-radius: 6px; cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  border: 1px solid #304560; text-transform: capitalize;
+}
+.add-widget-main-button {
+  color: #131F29; background-color: #1DE4EB; border-color: #1DE4EB;
+}
+.add-widget-main-button:hover {
+  background-color: #94F5F0; border-color: #94F5F0;
+}
+.edit-layout-toggle-button {
+  color: #FFFFFF; background-color: #253952; border-color: #304560;
+}
+.edit-layout-toggle-button:hover {
+  background-color: #304560; border-color: #1DE4EB;
+}
+.edit-layout-toggle-button.editing {
+  background-color: #304560; border-color: #1DE4EB; color: #1DE4EB;
 }
 
-@keyframes logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* --- React Grid Layout & Widget Styling (Sisense Theme) --- */
+.react-grid-layout {
+  flex-grow: 1; overflow-y: auto; padding: 1.5rem;
+  position: relative; min-height: 0; background-color: #131F29;
+}
+.grid-item-widget {
+  background-color: #1A2B3C; border-radius: 8px; border: 1px solid #304560;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3); overflow: hidden;
+  display: flex; flex-direction: column; color: #FFFFFF;
+  transition: border-color 0.2s ease;
+}
+.grid-item-widget:hover { border-color: #1DE4EB; }
+.react-grid-item.react-grid-placeholder {
+  background: rgba(29, 228, 235, 0.15); border-radius: 8px;
+  border: 2px dashed rgba(29, 228, 235, 0.4);
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  a:nth-of-type(2) .logo {
-    animation: logo-spin infinite 20s linear;
-  }
+/* --- Widget Header & Content Styling (Sisense Theme) --- */
+.widget-header {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.75rem 1rem; background-color: transparent;
+  border-bottom: 1px solid #304560; cursor: grab;
+  flex-shrink: 0; min-height: 48px;
+}
+.grid-item-widget.react-draggable-dragging .widget-header { cursor: grabbing; }
+.widget-title {
+  font-family: 'Poppins', sans-serif; font-weight: 600; font-size: 1rem;
+  color: #FFFFFF; white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.remove-widget-button-rgl {
+  padding: 0; width: 24px; height: 24px; font-size: 16px; line-height: 22px;
+  text-align: center; background-color: transparent; color: #A0B0C0;
+  border: none; border-radius: 4px; cursor: pointer;
+  transition: background-color 0.2s, color 0.2s;
+}
+.remove-widget-button-rgl:hover { background-color: #F05959; color: white; }
+.widget-content-rgl {
+  flex-grow: 1; overflow: hidden; /* Let children handle scroll */
+  padding: 0; /* Remove padding here, let children manage */
+  display: flex; flex-direction: column; min-height: 0;
 }
 
-.card {
-  padding: 2em;
+/* --- AccountTable specific styles (Sisense Theme) --- */
+.table-widget-container {
+  display: flex; flex-direction: column; width: 100%; height: 100%;
+  background-color: #1A2B3C; flex-grow: 1; min-height: 0;
 }
+.table-controls {
+  display: flex; justify-content: space-between; align-items: center;
+  padding: 0.5rem 1rem; border-bottom: 1px solid #304560;
+  background-color: #131F29; gap: 1rem; flex-wrap: wrap; flex-shrink: 0;
+}
+.table-scroll-area { flex-grow: 1; overflow: auto; min-height: 0; padding: 0; }
+.account-table {
+  width: 100%; border-collapse: collapse; font-size: 0.875rem;
+  font-family: 'DM Sans', sans-serif;
+}
+.account-table th {
+  background-color: #253952; color: #A0B0C0; padding: 0.75rem 1rem;
+  text-align: left; font-family: 'Poppins', sans-serif; font-weight: 500;
+  position: sticky; top: 0; z-index: 10; border-bottom: 2px solid #304560;
+  border-right: 1px solid #131F29;
+}
+.account-table th:last-child { border-right: none; }
+.account-table td {
+  padding: 0.75rem 1rem; border-bottom: 1px solid #253952; color: #FFFFFF;
+  vertical-align: middle; border-right: 1px solid #131F29;
+}
+.account-table td:last-child { border-right: none; }
+.account-table tbody tr:hover td { background-color: #253952; }
+.pagination-controls {
+  display: flex; justify-content: center; align-items: center;
+  padding: 0.75rem 1rem; border-top: 1px solid #304560;
+  background-color: #131F29; flex-shrink: 0;
+}
+.industry-filter-select, .formatting-toolbar select, .toolbar-select,
+.pagination-controls button {
+  padding: 0.5rem 0.75rem; border-radius: 6px; border: 1px solid #304560;
+  background-color: #1A2B3C; color: #FFFFFF; font-size: 0.875rem;
+  cursor: pointer; transition: background-color 0.15s, border-color 0.15s;
+  font-family: 'Poppins', sans-serif;
+}
+.industry-filter-select:hover, .formatting-toolbar select:hover, .toolbar-select:hover,
+.pagination-controls button:hover:not(:disabled) {
+  background-color: #253952; border-color: #1DE4EB;
+}
+.pagination-controls button:disabled { color: #5a687f; cursor: not-allowed; opacity: 0.7; }
+.pagination-controls span { color: #A0B0C0; font-size: 0.875rem; margin: 0 0.5rem;}
 
-.read-the-docs {
-  color: #888;
+/* --- DashboardItem (Charts, KPI) Styling --- */
+.dashboard-item { display: flex; flex-direction: column; width: 100%; height: 100%; flex-grow: 1; min-width: 0; min-height: 0; background-color: #1A2B3C; }
+.dashboard-item-content { flex-grow: 1; overflow: hidden; display: flex; flex-direction: column; align-items: center; justify-content: center; min-height: 0; width: 100%; height: 100%; padding: 1rem; /* Re-add padding here for non-notepad items */ }
+.chart-container { width: 100%; height: 100%; position: relative; display: flex; align-items: center; justify-content: center; }
+.kpi-container { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; width: 100%; height: 100%; padding: 1rem; }
+.kpi-container h2 { font-family: 'Poppins', sans-serif; font-size: clamp(2.5rem, 10cqi, 4rem); margin: 0 0 0.1em 0; color: #FFFFFF; font-weight: 700; line-height: 1.1; }
+.kpi-container p { font-family: 'Poppins', sans-serif; font-size: clamp(1rem, 3cqi, 1.25rem); color: #A0B0C0; margin: 0; font-weight: 500; }
+.chart-data-message, .table-message { color: #A0B0C0; font-size: 1rem; text-align: center; width: 100%; padding: 3rem 1rem; height: 100%; display: flex; align-items: center; justify-content: center; flex-grow: 1; }
+.table-message.error, .chart-message.error { color: #F05959; }
+
+/* --- Modal & Widget Library (Sisense Theme) --- */
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background-color: rgba(19, 31, 41, 0.85); display: flex; align-items: center; justify-content: center; z-index: 1050; }
+.modal-content { background-color: #1A2B3C; padding: 25px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5); width: 90%; max-width: 800px; max-height: 85vh; display: flex; flex-direction: column; overflow: hidden; border: 1px solid #304560; }
+.modal-header { display: flex; justify-content: space-between; align-items: center; border-bottom: 1px solid #304560; padding-bottom: 15px; margin-bottom: 20px; flex-shrink: 0;}
+.modal-header h3 { margin: 0; color: #FFFFFF; font-family: 'Poppins', sans-serif; font-size: 1.25rem; font-weight: 600; }
+.modal-close-button { background: none; border: none; font-size: 1.75rem; color: #A0B0C0; cursor: pointer; padding: 0; line-height: 1; }
+.modal-close-button:hover { color: #FFFFFF; }
+.modal-body { overflow-y: auto; padding-right: 15px; }
+.widget-library-container { padding: 0; }
+.widget-options-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 1.25rem; }
+.widget-card { background-color: #131F29; border: 1px solid #304560; border-radius: 8px; padding: 1.25rem; display: flex; flex-direction: column; justify-content: space-between; transition: border-color 0.2s ease-in-out, transform 0.2s ease-in-out; }
+.widget-card:hover { border-color: #1DE4EB; transform: translateY(-3px); }
+.widget-card-icon-placeholder { font-size: 2rem; text-align: center; color: #1DE4EB; margin-bottom: 1rem; }
+.widget-card-title { font-family: 'Poppins', sans-serif; font-weight: 600; margin-top: 0; margin-bottom: 0.5rem; color: #FFFFFF; font-size: 1.05rem; }
+.widget-card-description { font-family: 'DM Sans', sans-serif; font-size: 0.875rem; color: #A0B0C0; margin-bottom: 1.25rem; line-height: 1.5; flex-grow: 1; }
+.widget-card-add-button { font-family: 'Poppins', sans-serif; font-weight: 600; padding: 0.6rem 1rem; width: 100%; border-radius: 6px; border: 1px solid #304560; background-color: #253952; color: #FFFFFF; cursor: pointer; transition: background-color 0.2s, border-color 0.2s; margin-top: auto; font-size: 0.875rem; }
+.widget-card-add-button:hover { background-color: #1DE4EB; border-color: #1DE4EB; color: #131F29;}
+
+/* --- Scrollbar Styling (Sisense Theme) --- */
+::-webkit-scrollbar { width: 12px; height: 12px; }
+::-webkit-scrollbar-track { background: #131F29; border-radius: 10px; }
+::-webkit-scrollbar-thumb { background-color: #304560; border-radius: 10px; border: 3px solid #131F29; }
+::-webkit-scrollbar-thumb:hover { background-color: #1DE4EB; }
+* { scrollbar-width: auto; scrollbar-color: #304560 #131F29; }
+
+/* --- React Grid Layout Resize Handle (Sisense Theme) --- */
+.react-resizable-handle { background-image: none; opacity: 0; transition: opacity 0.2s ease-in-out; z-index: 20; }
+.react-grid-item:hover .react-resizable-handle,
+.react-grid-item.react-draggable-dragging .react-resizable-handle,
+.react-grid-item.cssTransforms .react-resizable-handle { opacity: 1; }
+.react-resizable-handle-se { width: 18px; height: 18px; bottom: -2px; right: -2px; cursor: se-resize; border-right: 3px solid #1DE4EB; border-bottom: 3px solid #1DE4EB; border-bottom-right-radius: 3px; }
+
+/* --- Context Menu (Sisense Theme) --- */
+.context-menu { position: fixed; z-index: 10000; background-color: #1A2B3C; border: 1px solid #304560; border-radius: 6px; box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4); min-width: 180px; padding: 5px; font-size: 0.875rem; }
+.context-menu ul { list-style: none; padding: 0; margin: 0; }
+.context-menu li { font-family: 'Poppins', sans-serif; padding: 8px 15px; color: #FFFFFF; cursor: pointer; border-radius: 4px; white-space: nowrap; }
+.context-menu li:hover { background-color: #1DE4EB; color: #131F29; }
+.context-menu li.disabled { color: #5a687f; cursor: not-allowed; }
+.context-menu li.disabled:hover { background-color: transparent; }
+
+/* --- Employee bar (Sisense Theme) --- */
+.employee-cell { display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.employee-number { flex-shrink: 0; min-width: 35px; text-align: right; }
+.employee-bar-container { flex-grow: 1; height: 12px; background-color: #304560; border-radius: 6px; overflow: hidden; }
+.employee-bar { height: 100%; border-radius: 6px; transition: width 0.3s ease-in-out; }
+
+/* --- Account name code style (Sisense Theme) --- */
+.account-name-code-style {
+  font-family: 'Poppins', sans-serif; background-color: #253952; color: #FFFFFF;
+  padding: 3px 7px; border-radius: 4px; display: inline-block;
+  line-height: 1.2; font-weight: 500;
 }
+.account-table td a .account-name-code-style { color: #FFFFFF !important; }
+.account-table td a { color: #94F5F0; text-decoration: none; }
+.account-table td a:hover { text-decoration: underline; color: #1DE4EB; }
+.description-cell-single-line { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; display: block; max-width: 100%; }
+
+/* --- TanStack Table Resizer Styles (Sisense Theme) --- */
+.resizer { position: absolute; right: 0px; top: 0; height: 100%; width: 8px; cursor: col-resize; user-select: none; touch-action: none; z-index: 20; }
+.resizer::before { content: ''; position: absolute; top: 15%; bottom: 15%; right: 3.5px; width: 1px; background-color: transparent; transition: background-color 0.2s; }
+.account-table th:hover .resizer::before { background-color: rgba(29, 228, 235, 0.6); }
+.resizer.isResizing::before { background-color: #1DE4EB; }
+
+/* --- ModernBarChart Styles (Sisense Theme) --- */
+.modern-widget-container-stacked { width: 100%; height: 100%; display: flex; flex-direction: column; overflow: hidden; background-color: #1A2B3C; }
+.modern-chart-scroll-area { flex-grow: 1; overflow: auto; min-height: 0; padding: 0; }
+
+/* --- Formatting Toolbar (Sisense Theme) --- */
+.formatting-toolbar { display: flex; align-items: center; gap: 1rem; background-color: #131F29; color: #A0B0C0; }
+.formatting-toolbar label, .formatting-toolbar span { font-size: 0.875rem; margin-right: -0.5rem; }
+.alignment-buttons { display: flex; align-items: center; gap: 0.25rem; border: 1px solid #304560; border-radius: 6px; overflow: hidden; }
+.alignment-buttons span { padding-left: 0.75rem; margin-right: 0.25rem; }
+.alignment-buttons button { background-color: #1A2B3C; color: #FFFFFF; border: none; padding: 0.4rem 0.6rem; cursor: pointer; transition: background-color 0.15s; border-radius: 0; border-left: 1px solid #304560; font-weight: bold; }
+.alignment-buttons button:first-of-type { border-left: none; }
+.alignment-buttons button:hover:not(:disabled) { background-color: #253952; }
+.alignment-buttons button.active { background-color: #1DE4EB; color: #131F29; }
+.alignment-buttons button:disabled { color: #5a687f; cursor: not-allowed; opacity: 0.7; background-color: #1A2B3C; }
+.selected-cell { background-color: #253952 !important; outline: 1px solid #1DE4EB; outline-offset: -1px; }
+
+/* --- NEW: Notepad Widget Styles --- */
+.notepad-widget-container {
+  display: flex; flex-direction: column; width: 100%; height: 100%;
+  background-color: #1A2B3C; overflow: hidden; padding: 0;
+}
+.notepad-textarea {
+  flex: 1; width: 100%; background-color: #131F29; color: #FFFFFF;
+  border: none; border-bottom: 1px solid #304560; padding: 0.75rem;
+  font-family: 'DM Sans', sans-serif; font-size: 0.9rem; resize: none;
+  min-height: 100px; outline: none;
+}
+.notepad-textarea::placeholder { color: #A0B0C0; }
+.task-section {
+  flex: 1; display: flex; flex-direction: column;
+  overflow: hidden; padding: 0.75rem;
+}
+.task-title {
+  font-family: 'Poppins', sans-serif; font-size: 0.9rem; font-weight: 600;
+  color: #A0B0C0; margin: 0 0 0.5rem 0; text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.task-list {
+  flex-grow: 1; overflow-y: auto; margin-bottom: 0.5rem; padding-right: 5px;
+}
+.task-item {
+  display: flex; align-items: center; margin-bottom: 0.5rem;
+  padding: 0.3rem 0; border-radius: 4px; transition: background-color 0.15s;
+}
+.task-item:hover { background-color: #253952; }
+.task-item input[type=checkbox] {
+  width: 18px; height: 18px; margin-right: 0.75rem; cursor: pointer;
+  accent-color: #1DE4EB;
+}
+.task-item .task-text-input {
+  flex-grow: 1; background: transparent; border: none; color: #FFFFFF;
+  font-size: 0.9rem; padding: 4px 0; outline: none;
+  font-family: 'DM Sans', sans-serif; transition: color 0.2s;
+}
+.task-item.completed .task-text-input {
+  text-decoration: line-through; color: #A0B0C0;
+}
+.delete-task-button {
+  background: transparent; border: none; color: #A0B0C0; font-size: 1.4rem;
+  cursor: pointer; padding: 0 5px; line-height: 1; opacity: 0.3;
+  transition: opacity 0.2s, color 0.2s;
+}
+.task-item:hover .delete-task-button { opacity: 1; }
+.delete-task-button:hover { color: #F05959; }
+.add-task-area {
+  display: flex; margin-top: 0.5rem; border-top: 1px solid #304560;
+  padding-top: 0.75rem;
+}
+.add-task-input {
+  flex-grow: 1; padding: 0.5rem 0.75rem; border-radius: 6px 0 0 6px;
+  border: 1px solid #304560; background-color: #131F29; color: #FFFFFF;
+  font-size: 0.875rem; outline: none; border-right: none;
+}
+.add-task-input:focus { border-color: #1DE4EB; }
+.add-task-button {
+  padding: 0.5rem 1rem; font-family: 'Poppins', sans-serif; font-size: 0.875rem;
+  font-weight: 600; border-radius: 0 6px 6px 0; cursor: pointer;
+  transition: background-color 0.2s, border-color 0.2s, color 0.2s;
+  color: #131F29; background-color: #1DE4EB; border: 1px solid #1DE4EB;
+}
+.add-task-button:hover { background-color: #94F5F0; border-color: #94F5F0; }
